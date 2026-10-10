@@ -1,57 +1,69 @@
 # Exercise Cadence
 
-A small, mobile-friendly exercise tempo coach. Runs entirely in your browser and is ready for free hosting with **GitHub Pages**. No dependencies, build tools, accounts, or backend needed.
+A compact exercise-tempo coach that works in a browser and can be hosted on **GitHub Pages**. No backend, libraries, build process, or internet connection required after the page loads.
 
 ## Features
 
-- Adjustable repetitions (1–999)
-- Independent eccentric and concentric phase durations (0.2–120 seconds each)
-- Animated TOP ↔ BOTTOM marker, current phase, rep count, and remaining phase time
-- Distinct high (top) and low (bottom) audio cues (optional)
-- Start, Pause/Resume, Reset
-- Dark theme and responsive display
-- Attempts to keep the screen awake during a set on supported browsers
-- Automatically pauses if the tab is hidden to avoid running a workout unnoticed
+- 1–999 repetitions
+- Eccentric and concentric motion times (0.2–120 seconds)
+- Independent **top and bottom pauses** (0–120 seconds; 0 skips the hold)
+- Configurable **pre-set countdown** (0–60 seconds)
+- Choose **eccentric-first** (start at TOP) or **concentric-first** (start at BOTTOM)
+- Animated TOP ↔ BOTTOM position marker and phase time remaining
+- Optional high-pitched TOP and low-pitched BOTTOM arrival tones
+- Start, Pause/Resume, Reset and elapsed exercise time
+- Responsive dark layout, screen-wake attempt on supported devices
+- Auto-pause when the browser tab becomes hidden
+
+## Exercise timing
+
+An eccentric-first rep has this sequence:
+
+1. TOP → BOTTOM: eccentric movement
+2. BOTTOM: optional bottom pause
+3. BOTTOM → TOP: concentric movement
+4. TOP: optional top pause
+
+A concentric-first rep has this sequence:
+
+1. BOTTOM → TOP: concentric movement
+2. TOP: optional top pause
+3. TOP → BOTTOM: eccentric movement
+4. BOTTOM: optional bottom pause
+
+Every repetition includes the relevant endpoint pauses, **including the final repetition**. If a hold is set to zero, the following movement begins immediately. The countdown occurs before the first movement and is **not** included in elapsed exercise time. Tones sound upon reaching the endpoints, including the initial starting position; they do not sound again when a hold ends. The repetition counter advances after a full cycle, including its final hold.
+
+Example: 10 repetitions × (3 s eccentric + 1 s bottom pause + 2 s concentric + 1 s top pause) = **70 seconds of exercise**, plus any starting countdown.
 
 ## Publish on GitHub Pages
 
-1. Create a public GitHub repository (for example, `exercise-cadence`).
-2. Upload `index.html` and `README.md` to the repository's root directory, or commit and push using Git.
-3. Open **Settings → Pages** in the GitHub repository.
-4. Under **Build and deployment**, select **Deploy from a branch**.
-5. Select branch **main**, folder **/(root)**, then **Save**.
-6. When deployment completes, open `https://YOUR-USERNAME.github.io/exercise-cadence/` (substitute your username/repository name).
+1. Create a public GitHub repository (e.g., `exercise-cadence`).
+2. Upload the included `index.html`, `README.md`, and `LICENSE` files into the repository root.
+3. Open **Settings → Pages**.
+4. Under **Build and deployment**, choose **Deploy from a branch**.
+5. Choose `main` and `/(root)`, then **Save**.
+6. Visit `https://YOUR-USERNAME.github.io/exercise-cadence/` after deployment.
 
 ## Run locally
 
-Open `index.html` directly in a modern browser, or use a simple web server:
+Open `index.html` directly, or serve the folder with:
 
 ```bash
 python -m http.server 8000
 ```
 
-Then visit `http://localhost:8000/`.
-
-## Usage
-
-Set **Repetitions**, **Eccentric (s)**, and **Concentric (s)**. Enable or disable audible cues. Press **Start**. The first cue marks **TOP**. The marker descends during the eccentric phase; a lower cue marks **BOTTOM**; it then ascends during the concentric phase. At TOP it sounds the high cue and the next repetition begins, until the set ends.
-
-Example: 10 reps × (3 s eccentric + 2 s concentric) = 50 s of movement.
+Then visit http://localhost:8000/.
 
 ## Notes
 
-- On many browsers, sound must be initiated by a user action such as pressing Start. Check device volume and silent-mode restrictions.
-- Keep the app visible for continuous timing. When you change tabs or lock the screen, the app pauses as a safety-oriented behavior.
-- Browser animation and audio are best-effort cues, not medically accurate measurement or real-time control.
-- A repetition is counted after **both** eccentric and concentric phases complete.
-- The program does not store personal data, exercise logs, or preferences.
+- Audio may require a tap/click on Start; device volume and browser silent-mode behavior vary.
+- If the browser tab is hidden or the screen locks, playback pauses rather than silently skipping repetitions.
+- Browser audio/animation timing is best-effort, not precision or medical instrumentation.
+- No workout data, settings, history, or personal information is saved.
+- The timer engine separates per-set cadence settings from playback state, making it suitable for a future exercise routine/prescription layer.
 
-## Project files
+## Files
 
-- `index.html` — complete app (HTML, CSS, JavaScript)
-- `README.md` — setup and usage guide
-- `LICENSE` — MIT license
-
-## License
-
-MIT.
+- `index.html`: complete app (HTML/CSS/JavaScript)
+- `README.md`: instructions
+- `LICENSE`: MIT License
