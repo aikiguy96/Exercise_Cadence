@@ -8,8 +8,8 @@
 :root{color-scheme:dark;font-family:system-ui,Segoe UI,sans-serif;background:#111820;color:#ecf2f7}
 *{box-sizing:border-box}body{margin:0;padding:18px;display:flex;justify-content:center}
 main{width:min(100%,490px)}h1{font-size:1.35rem;margin:0 0 14px}fieldset{border:1px solid #384958;border-radius:12px;padding:12px;margin:0 0 14px}legend{padding:0 6px;color:#a9bdcb}
-.controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}label{font-size:.85rem;color:#cbd9e4}input{width:100%;margin-top:5px;padding:10px 8px;border:1px solid #526579;border-radius:8px;background:#1c2935;color:white;font:inherit}input:focus-visible,button:focus-visible{outline:2px solid #6fc3fc;outline-offset:2px}
-.display{border:1px solid #384958;border-radius:16px;background:#18232d;padding:16px 18px;margin-bottom:14px;text-align:center}.phase{font-size:1.5rem;font-weight:700;min-height:2.1rem}.meta{display:flex;justify-content:space-between;color:#c2d4e2;margin:10px 0 4px;font-variant-numeric:tabular-nums}.visual{height:215px;position:relative;margin:12px 0}.track{height:100%;width:14px;border-radius:10px;background:#334454;position:absolute;left:50%;transform:translateX(-50%)}.marker{position:absolute;left:50%;top:0%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:#55cbfb;box-shadow:0 0 24px #3baefc55;border:5px solid #bceaff;transition:none}.end{position:absolute;right:calc(50% + 30px);color:#a4bbc9;font-weight:600;font-size:.85rem}.end.top{top:-7px}.end.bottom{bottom:-7px}.time{font-size:2rem;font-variant-numeric:tabular-nums;font-weight:700}.buttons{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px}button{border:0;border-radius:10px;background:#31465a;color:#f4faff;font:inherit;font-weight:650;padding:13px 8px;cursor:pointer}button.primary{background:#138fc5}button:disabled{opacity:.45;cursor:not-allowed}.hint{font-size:.82rem;color:#a4bac9;line-height:1.45;margin-top:12px}.settings{display:flex;gap:8px;align-items:center;margin-top:10px}.settings input{width:auto;margin:0}small{display:block;color:#b8c9d6;margin-top:8px}
+.controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}label{font-size:.85rem;color:#cbd9e4}input{width:100%;margin-top:5px;padding:10px 8px;border:1px solid #526579;border-radius:8px;background:#1c2935;color:white;font:inherit}input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid #6fc3fc;outline-offset:2px}
+.display{border:1px solid #384958;border-radius:16px;background:#18232d;padding:16px 18px;margin-bottom:14px;text-align:center}.phase{font-size:1.5rem;font-weight:700;min-height:2.1rem}.meta{display:flex;justify-content:space-between;color:#c2d4e2;margin:10px 0 4px;font-variant-numeric:tabular-nums}.visual{height:215px;position:relative;margin:12px 0}.track{height:100%;width:14px;border-radius:10px;background:#334454;position:absolute;left:50%;transform:translateX(-50%)}.marker{position:absolute;left:50%;top:0%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:#55cbfb;box-shadow:0 0 24px #3baefc55;border:5px solid #bceaff;transition:none}.end{position:absolute;right:calc(50% + 30px);color:#a4bbc9;font-weight:600;font-size:.85rem}.end.top{top:-7px}.end.bottom{bottom:-7px}.time{font-size:2rem;font-variant-numeric:tabular-nums;font-weight:700}.buttons{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px}button{border:0;border-radius:10px;background:#31465a;color:#f4faff;font:inherit;font-weight:650;padding:13px 8px;cursor:pointer}button.primary{background:#138fc5}button:disabled{opacity:.45;cursor:not-allowed}.hint{font-size:.82rem;color:#a4bac9;line-height:1.45;margin-top:12px}select{width:100%;margin-top:5px;padding:10px 8px;border:1px solid #526579;border-radius:8px;background:#1c2935;color:white;font:inherit}.settings{display:flex;gap:8px;align-items:center;margin-top:10px}.settings input{width:auto;margin:0}small{display:block;color:#b8c9d6;margin-top:8px}
 </style>
 </head>
 <body>
@@ -17,8 +17,10 @@ main{width:min(100%,490px)}h1{font-size:1.35rem;margin:0 0 14px}fieldset{border:
 <h1>Exercise Cadence</h1>
 <fieldset id="settings"><legend>Cadence settings</legend>
 <div class="controls"><label>Repetitions<input id="reps" type="number" min="1" max="999" step="1" value="10"></label><label>Eccentric (s)<input id="ecc" type="number" min="0.2" max="120" step="0.1" value="3"></label><label>Concentric (s)<input id="con" type="number" min="0.2" max="120" step="0.1" value="2"></label></div>
+<div class="controls" style="margin-top:10px"><label>Bottom pause (s)<input id="bottom" type="number" min="0" max="120" step="0.1" value="0"></label><label>Top pause (s)<input id="top" type="number" min="0" max="120" step="0.1" value="0"></label><label>Countdown (s)<input id="countdown" type="number" min="0" max="60" step="0.1" value="3"></label></div>
+<div style="margin-top:10px"><label>Begin with<select id="first"><option value="ecc">Eccentric · lower from TOP</option><option value="con">Concentric · lift from BOTTOM</option></select></label></div>
 <label class="settings"><input type="checkbox" id="sound" checked> Audible top/bottom cues</label>
-<small>Starts at TOP, moves to BOTTOM during eccentric, then returns to TOP during concentric. No holds.</small>
+<small>Pauses happen after arriving at each endpoint. Both endpoint pauses are included in each repetition, including the last. Zero skips a pause.</small>
 </fieldset>
 <section class="display" aria-label="Cadence visualization">
 <div id="phase" class="phase" aria-live="polite">Ready</div>
@@ -27,32 +29,119 @@ main{width:min(100%,490px)}h1{font-size:1.35rem;margin:0 0 14px}fieldset{border:
 <div class="time" id="remaining">0.0s</div>
 </section>
 <div class="buttons"><button class="primary" id="start">Start</button><button id="pause" disabled>Pause</button><button id="reset">Reset</button></div>
-<div class="hint">Press Start once to enable sound in your browser. A high tone signals the <strong>top</strong>; a low tone signals the <strong>bottom</strong>. The marker travels continuously between them. Keep this page open and the screen awake during a set; browsers may throttle inactive tabs.</div>
+<div class="hint">Press Start once to enable sound in your browser. A high tone signals the <strong>top</strong>; a low tone signals the <strong>bottom</strong>. The marker moves during each motion and stays at the endpoint during a pause. Keep this page open and the screen awake during a set; browsers may throttle inactive tabs.</div>
 </main>
 <script>
 (()=>{
 'use strict';
-const $=id=>document.getElementById(id), els={reps:$('reps'),ecc:$('ecc'),con:$('con'),sound:$('sound'),phase:$('phase'),counter:$('counter'),elapsed:$('elapsed'),marker:$('marker'),remaining:$('remaining'),start:$('start'),pause:$('pause'),reset:$('reset')};
-let cfg=null,state='idle',phase='ecc',rep=1,phaseElapsed=0,totalElapsed=0,lastFrame=0,raf=0,audio=null,lock=null;
+const $=id=>document.getElementById(id);
+const els={reps:$('reps'),ecc:$('ecc'),con:$('con'),bottom:$('bottom'),top:$('top'),countdown:$('countdown'),first:$('first'),sound:$('sound'),phase:$('phase'),counter:$('counter'),elapsed:$('elapsed'),marker:$('marker'),remaining:$('remaining'),start:$('start'),pause:$('pause'),reset:$('reset')};
+const inputs=[els.reps,els.ecc,els.con,els.bottom,els.top,els.countdown,els.first];
+let cfg=null,state='idle',phase='ecc',rep=1,phaseElapsed=0,totalElapsed=0,lastFrame=null,raf=0,audio=null,lock=null;
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
-function tone(top){if(!els.sound.checked)return;try{audio ??=new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();const o=audio.createOscillator(),g=audio.createGain(),t=audio.currentTime;o.type='sine';o.frequency.value=top?880:440;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.16,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+.17);o.connect(g);g.connect(audio.destination);o.start(t);o.stop(t+.19);}catch(e){console.warn('Audio unavailable',e)}}
-function readCfg(){const n=Number(els.reps.value),e=Number(els.ecc.value),c=Number(els.con.value);if(!Number.isInteger(n)||n<1||n>999||!Number.isFinite(e)||e<.2||e>120||!Number.isFinite(c)||c<.2||c>120){alert('Set repetitions to 1–999 and each phase to 0.2–120 seconds.');return null}return {n,e,c}}
+function tone(top){
+  if(!els.sound.checked)return;
+  try{
+    audio ??=new (window.AudioContext||window.webkitAudioContext)();
+    if(audio.state==='suspended')audio.resume();
+    const o=audio.createOscillator(),g=audio.createGain(),t=audio.currentTime;
+    o.type='sine';o.frequency.value=top?880:440;
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.16,t+.012);
+    g.gain.exponentialRampToValueAtTime(.0001,t+.17);
+    o.connect(g);g.connect(audio.destination);o.start(t);o.stop(t+.19);
+  }catch(err){console.warn('Audio unavailable',err)}
+}
+function readCfg(){
+  const n=Number(els.reps.value),e=Number(els.ecc.value),c=Number(els.con.value),b=Number(els.bottom.value),t=Number(els.top.value),count=Number(els.countdown.value);
+  if(!Number.isInteger(n)||n<1||n>999||![e,c].every(x=>Number.isFinite(x)&&x>=.2&&x<=120)||![b,t].every(x=>Number.isFinite(x)&&x>=0&&x<=120)||!Number.isFinite(count)||count<0||count>60){
+    alert('Enter 1–999 reps, motion durations of 0.2–120 s, pauses of 0–120 s, and a countdown of 0–60 s.');return null;
+  }
+  return {n,e,c,b,t,count,first:els.first.value};
+}
+function duration(p){return p==='count'?cfg.count:p==='ecc'?cfg.e:p==='con'?cfg.c:p==='bottom'?cfg.b:cfg.t}
 function fmt(s){const v=Math.floor(s);return Math.floor(v/60)+':'+String(v%60).padStart(2,'0')}
-function setButtons(){els.start.disabled=state==='running';els.pause.disabled=state!=='running'&&state!=='paused';els.pause.textContent=state==='paused'?'Resume':'Pause';els.start.textContent=state==='done'?'Start again':'Start';for(const el of [els.reps,els.ecc,els.con])el.disabled=state==='running'||state==='paused'}
-function draw(){const n=cfg?.n||Math.max(1,Math.floor(Number(els.reps.value)||10));let y=0,rem=0;if(state==='running'||state==='paused'){const duration=phase==='ecc'?cfg.e:cfg.c;const fraction=clamp(phaseElapsed/duration,0,1);y=phase==='ecc'?fraction:1-fraction;rem=duration-phaseElapsed;els.phase.textContent=phase==='ecc'?'Eccentric · LOWER':'Concentric · LIFT';}else if(state==='done'){els.phase.textContent='Set complete';y=0;rem=0}else{els.phase.textContent='Ready';y=0;rem=0}
-els.marker.style.top=(y*100)+'%';els.remaining.textContent=Math.max(0,rem).toFixed(1)+'s';els.counter.textContent='Rep '+(state==='idle'?0:state==='done'?cfg.n:rep)+' / '+n;els.elapsed.textContent='Elapsed '+fmt(totalElapsed);setButtons()}
-function stopLoop(){cancelAnimationFrame(raf);raf=0;lastFrame=0}
-function finish(){state='done';phaseElapsed=0;stopLoop();releaseWake();draw()}
-function advance(dt){while(dt>0&&state==='running'){let duration=phase==='ecc'?cfg.e:cfg.c;const step=Math.min(dt,Math.max(0,duration-phaseElapsed));phaseElapsed+=step;totalElapsed+=step;dt-=step;if(phaseElapsed>=duration-1e-8){phaseElapsed=0;if(phase==='ecc'){phase='con';tone(false)}else if(rep>=cfg.n){tone(true);finish();return}else{rep++;phase='ecc';tone(true)}}}}
-function tick(now){if(state!=='running')return;if(lastFrame)advance(Math.max(0,(now-lastFrame)/1000));lastFrame=now;draw();if(state==='running')raf=requestAnimationFrame(tick)}
-async function acquireWake(){try{if('wakeLock'in navigator)lock=await navigator.wakeLock.request('screen')}catch(e){}}
+function setButtons(){
+  els.start.disabled=state==='running';els.pause.disabled=state!=='running'&&state!=='paused';
+  els.pause.textContent=state==='paused'?'Resume':'Pause';els.start.textContent=state==='done'?'Start again':'Start';
+  for(const el of inputs)el.disabled=state==='running'||state==='paused';
+}
+function startPosition(){return (cfg?.first||els.first.value)==='con'?100:0}
+function draw(){
+  const n=cfg?.n||Math.max(1,Math.floor(Number(els.reps.value)||10));
+  let y=startPosition(),rem=0;
+  if(state==='running'||state==='paused'){
+    const d=duration(phase),fraction=d>0?clamp(phaseElapsed/d,0,1):1;
+    if(phase==='ecc')y=100*fraction;
+    else if(phase==='con')y=100*(1-fraction);
+    else if(phase==='bottom')y=100;
+    else if(phase==='top')y=0;
+    rem=Math.max(0,d-phaseElapsed);
+    const names={count:'Get ready',ecc:'Eccentric · LOWER',con:'Concentric · LIFT',bottom:'BOTTOM · HOLD',top:'TOP · HOLD'};
+    els.phase.textContent=names[phase]+(state==='paused'?' · Paused':'');
+  }else if(state==='done'){els.phase.textContent='Set complete';y=cfg.first==='con'?100:0}
+  else{els.phase.textContent='Ready'}
+  els.marker.style.top=y+'%';els.remaining.textContent=rem.toFixed(1)+'s';
+  els.counter.textContent='Rep '+(state==='idle'?0:state==='done'?cfg.n:rep)+' / '+n;
+  els.elapsed.textContent='Elapsed '+fmt(totalElapsed);setButtons();
+}
+function stopLoop(){cancelAnimationFrame(raf);raf=0;lastFrame=null}
 function releaseWake(){if(lock){lock.release().catch(()=>{});lock=null}}
-function run(){state='running';lastFrame=0;tone(true);acquireWake();draw();raf=requestAnimationFrame(tick)}
-els.start.onclick=()=>{const next=readCfg();if(!next)return;stopLoop();releaseWake();cfg=next;phase='ecc';rep=1;phaseElapsed=0;totalElapsed=0;run()};
-els.pause.onclick=()=>{if(state==='running'){state='paused';stopLoop();releaseWake();draw()}else if(state==='paused'){state='running';lastFrame=0;acquireWake();draw();raf=requestAnimationFrame(tick)}};
-els.reset.onclick=()=>{stopLoop();releaseWake();cfg=null;state='idle';phase='ecc';rep=1;phaseElapsed=0;totalElapsed=0;draw()};
-els.reps.addEventListener('input',()=>{if(state==='idle')draw()});
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='running'){state='paused';stopLoop();releaseWake();draw()}});
+async function acquireWake(){try{if('wakeLock'in navigator)lock=await navigator.wakeLock.request('screen')}catch(err){}}
+function finish(){state='done';phaseElapsed=0;stopLoop();releaseWake();draw()}
+function nextPhase(){
+  if(phase==='count'){
+    phase=cfg.first;tone(phase==='ecc');return;
+  }
+  if(phase==='ecc'){tone(false);phase='bottom'}
+  else if(phase==='bottom')phase='con';
+  else if(phase==='con'){tone(true);phase='top'}
+  else if(phase==='top')phase='ecc';
+  // A rep completes after its second motion AND its endpoint hold.
+  // Concentric-first: con -> top -> ecc -> bottom -> next rep.
+  // Eccentric-first: ecc -> bottom -> con -> top -> next rep.
+  if((cfg.first==='ecc'&&phase==='ecc')||(cfg.first==='con'&&phase==='con')){
+    if(rep>=cfg.n){finish();return}
+    rep++;
+  }
+}
+function advance(dt){
+  let guard=0;
+  while(state==='running'&&guard++<100000){
+    const d=duration(phase),remaining=Math.max(0,d-phaseElapsed);
+    if(remaining>dt){phaseElapsed+=dt;if(phase!=='count')totalElapsed+=dt;break}
+    phaseElapsed+=remaining;if(phase!=='count')totalElapsed+=remaining;
+    dt=Math.max(0,dt-remaining);phaseElapsed=0;nextPhase();
+    if(state!=='running')break;
+    // Also transition zero-duration holds (and zero countdown) without waiting for another frame.
+    if(dt===0&&duration(phase)>0)break;
+  }
+}
+function tick(now){
+  if(state!=='running')return;
+  if(lastFrame!==null)advance(Math.max(0,(now-lastFrame)/1000));
+  lastFrame=now;draw();if(state==='running')raf=requestAnimationFrame(tick);
+}
+function begin(){
+  state='running';lastFrame=null;acquireWake();
+  if(phase!=='count')tone(cfg.first==='ecc');
+  draw();raf=requestAnimationFrame(tick);
+}
+els.start.onclick=()=>{
+  const next=readCfg();if(!next)return;
+  stopLoop();releaseWake();cfg=next;phase=cfg.count>0?'count':cfg.first;
+  rep=1;phaseElapsed=0;totalElapsed=0;begin();
+};
+els.pause.onclick=()=>{
+  if(state==='running'){state='paused';stopLoop();releaseWake();draw()}
+  else if(state==='paused'){state='running';lastFrame=null;acquireWake();draw();raf=requestAnimationFrame(tick)}
+};
+els.reset.onclick=()=>{
+  stopLoop();releaseWake();cfg=null;state='idle';phase='ecc';rep=1;phaseElapsed=0;totalElapsed=0;draw();
+};
+for(const el of [els.reps,els.first])el.addEventListener('change',()=>{if(state==='idle')draw()});
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden&&state==='running'){state='paused';stopLoop();releaseWake();draw()}
+});
 draw();
 })();
 </script>
